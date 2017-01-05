@@ -6,7 +6,7 @@
 /*   By: vinvimo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 07:06:31 by vinvimo           #+#    #+#             */
-/*   Updated: 2017/01/05 22:53:32 by vinvimo          ###   ########.fr       */
+/*   Updated: 2017/01/05 23:46:26 by vinvimo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static	t_gnl	*find_file(t_gnl **file, int fd)
 	return (tmp);
 }
 
-int				get_next_line_bis(int *i, char *buff, char **line, t_gnl *lst)
+int				read_loop(int *i, char *buff, t_gnl *lst)
 {
 	char	*tmp;
 
@@ -62,18 +62,13 @@ int				get_next_line_bis(int *i, char *buff, char **line, t_gnl *lst)
 		ERRORCHECK((tmp = ft_strdup(lst->content)));
 		free(lst->content);
 		ERRORCHECK(!(lst->content = ft_strjoin(tmp, buff)));
-		ft_bzero(buff, BUFF_SIZE);
+		ft_bzero(buff, BUFF_SIZE + 1);
 		free(tmp);
 	}
-//ft_putendl(lst->content);
-
+//ft_putchar(lst->content[0]);
+	*i = 0;
 	while (lst->content[*i] && lst->content[*i] != '\n')
 		(*i)++;
-	ERRORCHECK((*line = ft_strnew(*i + 1)))
-	*i = -1;
-	while (lst->content[++*i] && lst->content[*i] != '\n')
-		*(*line + *i) = lst->content[*i];
-	*(*line + *i) = 0;
 	return (1);
 }
 
@@ -84,19 +79,22 @@ int				get_next_line(const int fd, char **line)
 	static	t_gnl	*file = NULL;
 	t_gnl			*lst;
 
-	i = 0;
 	if (fd < 0 || line == NULL || BUFF_SIZE <= 0)
 		return (-1);
 	lst = find_file(&file, fd);
 	ERRORCHECK((buff = ft_strnew(BUFF_SIZE + 1)));
-	ft_bzero(buff, BUFF_SIZE);
-	if (get_next_line_bis(&i, buff, line, lst) == -1)
+	ft_bzero(buff, BUFF_SIZE + 1);
+	if (read_loop(&i, buff, lst) == -1)
 		return (-1);
 	free(buff);
+	ERRORCHECK((*line = ft_strnew(i + 1)))
+	i = -1;
+	while (lst->content[++i] && lst->content[i] != '\n')
+		*(*line + i) = lst->content[i];
+	*(*line + i) = 0;
 	if (*(lst->content) == 0)
 		return (0);
-//	lst->content = ft_strchr(lst->content, '\n');
-
+	lst->content = ft_strchr(lst->content, '\n');
 	if (*(lst->content) == '\n')
 		(lst->content)++;
 	return (1);
