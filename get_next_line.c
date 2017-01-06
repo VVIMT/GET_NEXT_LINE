@@ -6,7 +6,7 @@
 /*   By: vinvimo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 07:06:31 by vinvimo           #+#    #+#             */
-/*   Updated: 2017/01/05 23:46:26 by vinvimo          ###   ########.fr       */
+/*   Updated: 2017/01/06 21:04:29 by vinvimo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,43 +53,35 @@ static	t_gnl	*find_file(t_gnl **file, int fd)
 
 int				read_loop(char *buff, t_gnl *lst)
 {
-	char	*tmp;
-
+	ERRORCHECK((buff = ft_strnew(BUFF_SIZE + 1)));
+	ft_bzero(buff, BUFF_SIZE + 1);
 	if (read(lst->fd, buff, 0) < 0)
 		return (-1);
 	while (read(lst->fd, buff, BUFF_SIZE) > 0)
 	{
-		ERRORCHECK((tmp = ft_strdup(lst->content)))
-		ERRORCHECK(lst->content)
-		if (lst->content != NULL)
-			free(lst->content);
-		ERRORCHECK((lst->content = ft_strjoin(tmp, buff)))
+		ERRORCHECK(lst->content);
+		ERRORCHECK((lst->content = ft_strjoin(lst->content, buff)));
 		ft_bzero(buff, BUFF_SIZE + 1);
-		if (tmp != NULL)
-			free(tmp);
 	}
+	free(buff);
 	return (1);
 }
 
 int				get_next_line(const int fd, char **line)
 {
 	int				i;
-	char			*buff;
 	static	t_gnl	*file = NULL;
 	t_gnl			*lst;
 
 	if (fd < 0 || line == NULL || BUFF_SIZE <= 0)
 		return (-1);
-	ERRORCHECK((lst = find_file(&file, fd)))
-	ERRORCHECK((buff = ft_strnew(BUFF_SIZE + 1)))
-	ft_bzero(buff, BUFF_SIZE + 1);
-	if (read_loop(buff, lst) == -1)
+	ERRORCHECK((lst = find_file(&file, fd)));
+	if (read_loop(NULL, lst) == -1)
 		return (-1);
-	free(buff);
 	i = 0;
 	while (lst->content && lst->content[i] && lst->content[i] != '\n')
 		i++;
-	ERRORCHECK((*line = ft_strnew(i + 1)))
+	ERRORCHECK((*line = ft_strnew(i + 1)));
 	i = -1;
 	while (lst->content && lst->content[++i] && lst->content[i] != '\n')
 		*(*line + i) = lst->content[i];
