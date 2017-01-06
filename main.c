@@ -3,8 +3,9 @@
 
 int main(int argc, char **argv)
 {
-	int fd;
-	char *line;
+	int		x;
+	int		fd;
+	char	*line;
 
 	if (argc == 1)
 		fd = 0;
@@ -12,9 +13,11 @@ int main(int argc, char **argv)
 		fd = open(argv[1], O_RDONLY);
 	else
 		return (2);
-	while (get_next_line(fd, &line))
+	x = 1;
+	while (x == 1)
 	{
-		printf("%s\n", line);
+		x = get_next_line(fd, &line);
+//		printf("%s\n", line);
 		free(line);
 	}
 	if (argc == 2)
