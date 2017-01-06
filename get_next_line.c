@@ -6,7 +6,7 @@
 /*   By: vinvimo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 07:06:31 by vinvimo           #+#    #+#             */
-/*   Updated: 2017/01/06 21:04:29 by vinvimo          ###   ########.fr       */
+/*   Updated: 2017/01/07 00:13:53 by vinvimo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,28 @@ static	t_gnl	*find_file(t_gnl **file, int fd)
 
 int				read_loop(char *buff, t_gnl *lst)
 {
+	int		ret;
+	char	*tmp;
+
 	ERRORCHECK((buff = ft_strnew(BUFF_SIZE + 1)));
 	ft_bzero(buff, BUFF_SIZE + 1);
 	if (read(lst->fd, buff, 0) < 0)
 		return (-1);
-	while (read(lst->fd, buff, BUFF_SIZE) > 0)
+	while ((ret = read(lst->fd, buff, BUFF_SIZE)))
 	{
-		ERRORCHECK(lst->content);
+		tmp = lst->content;
 		ERRORCHECK((lst->content = ft_strjoin(lst->content, buff)));
+		ft_strdel(&tmp);
 		ft_bzero(buff, BUFF_SIZE + 1);
 	}
-	free(buff);
+	ft_strdel(&buff);
 	return (1);
 }
 
 int				get_next_line(const int fd, char **line)
 {
 	int				i;
+	char			*tmp;
 	static	t_gnl	*file = NULL;
 	t_gnl			*lst;
 
@@ -88,7 +93,12 @@ int				get_next_line(const int fd, char **line)
 	*(*line + i) = 0;
 	if (!(lst->content) || *(lst->content) == 0)
 		return (0);
-	if ((lst->content = ft_strchr(lst->content, '\n')))
-		(lst->content)++;
+	if (lst->content[i] == '\n')
+		tmp = ft_strdup(lst->content + i + 1);
+	else
+		tmp = ft_strdup(lst->content + i);
+	ft_strclr(lst->content);
+	ft_strcpy(lst->content, tmp);
+	ft_strdel(&tmp);
 	return (1);
 }
