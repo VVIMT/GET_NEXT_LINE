@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	while (x == 1)
 	{
 		x = get_next_line(fd, &line);
-//		printf("%s\n", line);
+		printf("%s\n", line);
 		free(line);
 	}
 	if (argc == 2)

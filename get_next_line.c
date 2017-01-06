@@ -65,9 +65,8 @@ int				read_loop(int *i, char *buff, t_gnl *lst)
 		ft_bzero(buff, BUFF_SIZE + 1);
 		free(tmp);
 	}
-//ft_putendl(lst->content);
 	*i = 0;
-	while (lst->content[*i] && lst->content[*i] != '\n')
+	while (lst->content && lst->content[*i] && lst->content[*i] != '\n')
 		(*i)++;
 	return (1);
 }
@@ -82,8 +81,6 @@ int				get_next_line(const int fd, char **line)
 	if (fd < 0 || line == NULL || BUFF_SIZE <= 0)
 		return (-1);
 	lst = find_file(&file, fd);
-	if (!(lst->content))
-		return (0);
 	ERRORCHECK((buff = ft_strnew(BUFF_SIZE + 1)));
 	ft_bzero(buff, BUFF_SIZE + 1);
 	if (read_loop(&i, buff, lst) == -1)
@@ -91,10 +88,11 @@ int				get_next_line(const int fd, char **line)
 	free(buff);
 	ERRORCHECK((*line = ft_strnew(i + 1)))
 	i = -1;
-	while (lst->content[++i] && lst->content[i] != '\n')
+	while (lst->content && lst->content[++i] && lst->content[i] != '\n')
 		*(*line + i) = lst->content[i];
 	*(*line + i) = 0;
-ft_putendl(*line);
+	if (!(lst->content) || *(lst->content) == 0)
+		return (0);
 	if ((lst->content = ft_strchr(lst->content, '\n')))
 		(lst->content)++;
 	return (1);
