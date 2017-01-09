@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinvimo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/03 07:06:45 by vinvimo           #+#    #+#             */
-/*   Updated: 2017/01/09 22:18:10 by vinvimo          ###   ########.fr       */
+/*   Created: 2017/01/09 22:56:46 by vinvimo           #+#    #+#             */
+/*   Updated: 2017/01/09 22:57:01 by vinvimo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "libft/libft.h"
 
 # define ERRORCHECK(x) if (!x) return (-1)
-# define BUFF_SIZE 9
+# define BUFF_SIZE 1000
 
 typedef struct		s_gnl
 {

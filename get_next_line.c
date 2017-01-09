@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinvimo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/03 07:06:31 by vinvimo           #+#    #+#             */
-/*   Updated: 2017/01/09 22:22:58 by vinvimo          ###   ########.fr       */
+/*   Created: 2017/01/09 22:56:31 by vinvimo           #+#    #+#             */
+/*   Updated: 2017/01/09 22:56:34 by vinvimo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,43 +51,20 @@ static	t_gnl	*find_file(t_gnl **file, int fd)
 	return (tmp);
 }
 
-int				fill_line(int sig, int *i, char **line, t_gnl *lst)
+int				fill_line(int *i, char **line, t_gnl *lst)
 {
-//	int		x;
-
-	if (sig == 1)
-	{
-		*i = 0;
-		while (lst->content && lst->content[*i] && lst->content[*i] != '\n')
-			(*i)++;
-		ERRORCHECK((*line = ft_strnew(*i + 1)));
-		*i = -1;
-		while (lst->content && lst->content[++(*i)] && lst->content[*i] != '\n')
-			*(*line + *i) = lst->content[*i];
-		*(*line + *i) = 0;
-	}
-/*	else if (sig == 0)
-	{
-		x = 0;
-		while (lst->content && lst->content[x])
-		{
-			if (lst->content[x] == '\n' && lst->content[x + 1])
-				sig = x;
-			x++;
-		}
-ft_putnbr(x);
-ft_putchar(':');
-ft_putnbr(sig);
-ft_putchar('\n');
-		lst->content[sig] = 0;
-		ERRORCHECK((*line = ft_strnew(x - sig + 1)));
-		ft_strcpy(*line, lst->content + sig);
-//ft_putendl(*line);
-	}*/
+	*i = 0;
+	while (lst->content && lst->content[*i] && lst->content[*i] != '\n')
+		(*i)++;
+	ERRORCHECK((*line = ft_strnew(*i + 1)));
+	*i = -1;
+	while (lst->content && lst->content[++(*i)] && lst->content[*i] != '\n')
+		*(*line + *i) = lst->content[*i];
+	*(*line + *i) = 0;
 	return (1);
 }
 
-int				read_loop(char *buff, char **line, t_gnl *lst)
+int				read_loop(char *buff, t_gnl *lst)
 {
 	char	*tmp;
 
@@ -101,8 +78,6 @@ int				read_loop(char *buff, char **line, t_gnl *lst)
 		ERRORCHECK((lst->content = ft_strjoin(lst->content, buff)));
 		ft_strdel(&tmp);
 		ft_bzero(buff, BUFF_SIZE + 1);
-		if (lst->fd == 0)
-			ERRORCHECK(fill_line(0, NULL, line, lst));
 	}
 	ft_strdel(&buff);
 	return (1);
@@ -118,9 +93,9 @@ int				get_next_line(const int fd, char **line)
 	if (fd < 0 || line == NULL || BUFF_SIZE <= 0)
 		return (-1);
 	ERRORCHECK((lst = find_file(&file, fd)));
-	if (read_loop(NULL, line, lst) == -1)
+	if (read_loop(NULL, lst) == -1)
 		return (-1);
-	ERRORCHECK(fill_line(1, &i, line, lst));
+	ERRORCHECK(fill_line(&i, line, lst));
 	if (!(lst->content) || *(lst->content) == 0)
 		return (0);
 	if (lst->content[i] == '\n')
