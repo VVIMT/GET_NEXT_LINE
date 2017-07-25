@@ -6,7 +6,7 @@
 /*   By: vinvimo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 19:24:19 by vinvimo           #+#    #+#             */
-/*   Updated: 2017/01/06 21:23:08 by vinvimo          ###   ########.fr       */
+/*   Updated: 2017/06/16 20:12:23 by vinvimo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define LIBFT_H
 
 # include <string.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <wchar.h>
+# include <inttypes.h>
 
 typedef struct		s_list
 {
@@ -42,8 +46,10 @@ int					ft_strequ(char const *s1, char const *s2);
 void				ft_striter(char *s, void (*f)(char *));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 char				*ft_strjoin(char const *s1, const char *s2);
+char				*ft_strjoin_char(char const *s1, char const *s2, char c);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
 size_t				ft_strlen(char const *str);
+size_t				ft_strlen_w(const wchar_t *s);
 char				*ft_strmap(char const *s, char (*f)(char));
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strncat(char *s1, const char *s2, size_t n);
@@ -51,6 +57,7 @@ int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_strncpy(char *dst, const char *src, size_t n);
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
 char				*ft_strnew(size_t size);
+wchar_t				*ft_strnew_w(size_t size);
 char				*ft_strnstr(const char *s1, const char *s2, size_t n);
 char				*ft_strrchr(const char *s, int c);
 char				**ft_strsplit(char const *s, char c);
@@ -68,13 +75,16 @@ void				*ft_memcpy(void *dst, const void *src, size_t n);
 void				ft_memdel(void **ap);
 void				*ft_memmove(void *dst, const void *src, size_t len);
 void				*ft_memset(void *b, int c, size_t len);
+void				*ft_memset_w(void *b, int c, size_t len);
 void				ft_putchar(char c);
+void				ft_putchar_w(wchar_t c);
 void				ft_putchar_fd(char c, int fd);
 void				ft_putendl(char const *s);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr(int n);
 void				ft_putnbr_fd(int n, int fd);
 void				ft_putstr(char const *s);
+void				ft_putstr_w(wchar_t const *s);
 void				ft_putstr_fd(char const *s, int fd);
 long double			ft_power(long double x, int y);
 void				ft_lstadd(t_list **alst, t_list *new);

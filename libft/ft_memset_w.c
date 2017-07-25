@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset_w.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinvimo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/10 18:44:34 by vinvimo           #+#    #+#             */
-/*   Updated: 2017/01/10 18:44:39 by vinvimo          ###   ########.fr       */
+/*   Created: 2017/06/16 19:49:35 by vinvimo           #+#    #+#             */
+/*   Updated: 2017/06/16 19:52:36 by vinvimo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <stdio.h>
+#include "libft.h"
 
-int	main(int argc, char **argv)
+void	*ft_memset_w(void *b, int c, size_t len)
 {
-	int		x;
-	int		fd;
-	char	*line;
+	size_t			i;
+	wchar_t			*x;
 
-	if (argc == 1)
-		fd = 0;
-	else if (argc == 2)
-		fd = open(argv[1], O_RDONLY);
-	else
-		return (2);
-	x = 1;
-	while (x == 1)
+	i = 0;
+	x = (wchar_t *)b;
+	while (i < len)
 	{
-		x = get_next_line(fd, &line);
-//		printf("%d\n", x);
-		ft_putendl(line);
-		free(line);
+		x[i] = c;
+		i++;
 	}
-	if (argc == 2)
-		close(fd);
+	return (x);
 }

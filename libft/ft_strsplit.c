@@ -29,7 +29,7 @@ static	int	ft_word(const char *s, char c)
 	size_t	j;
 
 	i = 0;
-	j = 0;
+	j = 1;
 	while (s[i])
 	{
 		if (s[i] == c)

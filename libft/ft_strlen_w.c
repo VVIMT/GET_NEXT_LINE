@@ -1,38 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen_w.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinvimo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/10 18:44:34 by vinvimo           #+#    #+#             */
-/*   Updated: 2017/01/10 18:44:39 by vinvimo          ###   ########.fr       */
+/*   Created: 2017/06/16 19:55:32 by vinvimo           #+#    #+#             */
+/*   Updated: 2017/06/16 19:55:45 by vinvimo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <stdio.h>
+#include "libft.h"
 
-int	main(int argc, char **argv)
+size_t	ft_strlen_w(const wchar_t *s)
 {
-	int		x;
-	int		fd;
-	char	*line;
+	size_t	i;
 
-	if (argc == 1)
-		fd = 0;
-	else if (argc == 2)
-		fd = open(argv[1], O_RDONLY);
-	else
-		return (2);
-	x = 1;
-	while (x == 1)
-	{
-		x = get_next_line(fd, &line);
-//		printf("%d\n", x);
-		ft_putendl(line);
-		free(line);
-	}
-	if (argc == 2)
-		close(fd);
+	i = 0;
+	while (s[i] != 0)
+		i++;
+	return (i);
 }

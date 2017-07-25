@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strnew_w.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinvimo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/10 18:44:34 by vinvimo           #+#    #+#             */
-/*   Updated: 2017/01/10 18:44:39 by vinvimo          ###   ########.fr       */
+/*   Created: 2017/06/16 19:56:20 by vinvimo           #+#    #+#             */
+/*   Updated: 2017/06/16 19:56:40 by vinvimo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <stdio.h>
+#include "libft.h"
 
-int	main(int argc, char **argv)
+wchar_t		*ft_strnew_w(size_t size)
 {
-	int		x;
-	int		fd;
-	char	*line;
+	wchar_t	*x;
+	size_t	i;
 
-	if (argc == 1)
-		fd = 0;
-	else if (argc == 2)
-		fd = open(argv[1], O_RDONLY);
-	else
-		return (2);
-	x = 1;
-	while (x == 1)
+	if (!(x = (wchar_t *)malloc(sizeof(*x) * (size + 1))))
+		return (NULL);
+	i = 0;
+	while (i <= size)
 	{
-		x = get_next_line(fd, &line);
-//		printf("%d\n", x);
-		ft_putendl(line);
-		free(line);
+		x[i] = 0;
+		i++;
 	}
-	if (argc == 2)
-		close(fd);
+	return (x);
 }
