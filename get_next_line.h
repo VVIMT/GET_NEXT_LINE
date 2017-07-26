@@ -19,7 +19,7 @@
 # include "libft/libft.h"
 
 # define ERRORCHECK(x) if (!x) return (-1)
-# define BUFF_SIZE 1000
+# define BUFF_SIZE 100
 
 typedef struct		s_gnl
 {

@@ -77,6 +77,8 @@ int				read_loop(char *buff, t_gnl *lst)
 		tmp = lst->content;
 		ERRORCHECK((lst->content = ft_strjoin(lst->content, buff)));
 		ft_strdel(&tmp);
+		if (strchr(buff, '\n'))
+			break ;
 		ft_bzero(buff, BUFF_SIZE + 1);
 	}
 	ft_strdel(&buff);
