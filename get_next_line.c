@@ -77,7 +77,7 @@ int				read_loop(char *buff, t_gnl *lst)
 		tmp = lst->content;
 		ERRORCHECK((lst->content = ft_strjoin(lst->content, buff)));
 		ft_strdel(&tmp);
-		if (strchr(buff, '\n'))
+		if (ft_strchr(buff, '\n'))
 			break ;
 		ft_bzero(buff, BUFF_SIZE + 1);
 	}
@@ -95,13 +95,17 @@ int				get_next_line(const int fd, char **line)
 	if (fd < 0 || line == NULL || BUFF_SIZE <= 0)
 		return (-1);
 	ERRORCHECK((lst = find_file(&file, fd)));
-	if (read_loop(NULL, lst) == -1)
-		return (-1);
-	ERRORCHECK(fill_line(&i, line, lst));
+	if (lst->content && *(lst->content) && ft_strchr(lst->content, '\n'))
+		ERRORCHECK(fill_line(&i, line, lst));
+	if (!(lst->content && *(lst->content) && ft_strchr(lst->content, '\n')))
+	{
+		if (read_loop(NULL, lst) == -1)
+			return (-1);
+		ERRORCHECK(fill_line(&i, line, lst));
+	}
 	if (!(lst->content) || *(lst->content) == 0)
 		return (0);
-	if (lst->content[i] == '\n')
-		i++;
+	lst->content[i] == '\n' ? i++: i;
 	ERRORCHECK((tmp = ft_strdup(lst->content + i)));
 	ft_strclr(lst->content);
 	ft_strcpy(lst->content, tmp);
