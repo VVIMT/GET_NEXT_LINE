@@ -21,8 +21,8 @@ t_gnl			*ft_newfile(void const *content, size_t fd)
 	if (content)
 	{
 		file->fd = fd;
-		file->content = ft_memalloc(1);
-		ft_memcpy(file->content, content, 1);
+		file->content = ft_memalloc(0);
+		ft_memcpy(file->content, content, 0);
 	}
 	else
 	{
