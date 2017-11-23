@@ -6,7 +6,7 @@
 /*   By: vinvimo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 22:56:31 by vinvimo           #+#    #+#             */
-/*   Updated: 2017/01/09 22:56:34 by vinvimo          ###   ########.fr       */
+/*   Updated: 2017/11/23 03:37:49 by vinvimo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int				get_next_line(const int fd, char **line)
 	}
 	if (!(lst->content) || *(lst->content) == 0)
 		return (0);
-	lst->content[i] == '\n' ? i++: i;
+	lst->content[i] == '\n' ? i++ : i;
 	ERRORCHECK((tmp = ft_strdup(lst->content + i)));
 	ft_strclr(lst->content);
 	ft_strcpy(lst->content, tmp);
